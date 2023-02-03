@@ -28,14 +28,14 @@ services:
     entrypoint: [ "/bin/bash", "/app/src/entrypoint.sh" ]
 
     links:
-      - redis
+      - fishbot-redis
     depends_on:
-      - redis
+      - fishbot-redis
 
   fishbot-redis:
     image: redis
     restart: always
-    container_name: redis
+    container_name: fishbot-redis
     environment:
       - TZ=${TIMEZONE}
     ports:

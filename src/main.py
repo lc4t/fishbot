@@ -12,7 +12,7 @@ from core.redis import Redis
 from core.scheduler import scheduler, task_detect_from_toml
 from init import app
 
-init_db(app)
+# init_db(app)
 
 
 @app.listener('before_server_start')
