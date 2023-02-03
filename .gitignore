@@ -1,0 +1,10 @@
+.env
+.DS_Store
+*.pyc
+*.pyo
+docker-compose-dev.yml
+*.nosync
+config.toml
+*.log
+*.log.zip
+dump.rdb
