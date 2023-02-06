@@ -51,10 +51,11 @@ class SenderCQ(SenderBase):
                 if resp.get('retcode') == 0:
                     logger.info(f'success send: \n{content}')
                     await app.ctx.redis.set(send_hash, 'success')
-                    # logger.info(await app.ctx.redis.get(send_hash))
                 else:
                     logger.warning(f'send_msg failed, {resp}')
                     await app.ctx.redis.set(send_hash, 'failed')
+                recheck = await app.ctx.redis.get(send_hash)
+                logger.debug(f'redis check: {send_hash} -> {recheck}')
             else:
                 logger.warning(f'unknown sender type: {sender}')
             # logger.info('+++++++++++')
