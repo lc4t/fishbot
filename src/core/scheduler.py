@@ -28,7 +28,7 @@ async def scheduler():
     config = {
         'job_defaults': scheduler_job_defaults,
         'timezone': os.getenv('TZ', 'Asia/Shanghai'),
-        'jobstores': {'default': RedisJobStore(jobs_key='dispatched_trips_jobs', run_times_key='dispatched_trips_running', **REDIS)},
+        # 'jobstores': {'default': RedisJobStore(jobs_key='dispatched_trips_jobs', run_times_key='dispatched_trips_running', **REDIS)},
     }
     app.ctx.scheduler = AsyncIOScheduler(**config)
     app.ctx.scheduler.start()

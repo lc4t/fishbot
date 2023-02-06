@@ -25,7 +25,7 @@ async def new_handler(store, store_path, handlers, senders, *args, **kwargs):
             content = await NormalHandler.new_handler(handler, store, store_path, content, handlers, *args, **kwargs)
         else:
             logger.warning(f'unknown handler type: {handler}')
-    logger.info(f'new task for sender:\n{content=}\n{senders=}')
+    logger.debug(f'new task for sender:\n{content=}\n{senders=}')
     app.ctx.scheduler.add_job(
         func=new_sender,
         trigger='date',

@@ -6,7 +6,6 @@ import tomllib
 from init import logger
 from sanic import response
 
-from core.db import init_db
 from core.http import HTTP
 from core.redis import Redis
 from core.scheduler import scheduler, task_detect_from_toml
