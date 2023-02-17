@@ -1,5 +1,6 @@
 from init import logger, app
 from .bilibili import BilibiliHandler
+from .weibo import WeiboHandler
 from .normal import NormalHandler
 from sender import new_sender
 import datetime
@@ -23,6 +24,8 @@ async def new_handler(store, store_path, handlers, senders, *args, **kwargs):
             content = await BilibiliHandler.new_handler(handler, store, store_path, content, handlers, *args, **kwargs)
         elif handler.startswith('normal.'):
             content = await NormalHandler.new_handler(handler, store, store_path, content, handlers, *args, **kwargs)
+        elif handler.startswith('weibo.'):
+            content = await WeiboHandler.new_handler(handler, store, store_path, content, handlers, *args, **kwargs)
         else:
             logger.warning(f'unknown handler type: {handler}')
     logger.debug(f'new task for sender:\n{content=}\n{senders=}')
