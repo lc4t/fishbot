@@ -1,0 +1,15 @@
+sanic
+asyncio
+aiohttp
+aioredis<2.0
+apscheduler
+tortoise-orm
+aiomysql
+python-dateutil
+sentry-sdk
+aiocontextvars
+loguru
+redis
+SQLAlchemy
+ipython
+nonebot

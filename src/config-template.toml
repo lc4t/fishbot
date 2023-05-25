@@ -1,0 +1,30 @@
+title = "fishbot"
+
+[conf]
+sender_retry_delay = 10
+
+[sender]
+[sender.cq_http]
+type = "cq.send_msg"
+url = "http://DOMAIN:PORT"
+api = "/send_msg"
+access_token = "TOKEN"
+
+[[discover]]
+name = "lc.B站动态"
+type = "bilibili.dynamic"
+uid = 40214146
+iteration = 60  # 60s检查一次
+max_delay = 600 # 忽略更早的动态
+handlers = ['bilibili.dynamic.split2format', 'normal.format2cq', ]  # 函数名, 必须使用全称
+senders = [{ name = "cq_http", target_type = "user", target = "QQ" }]   # name用于对应sender.{name}, 将加载sender.{name}的配置
+
+[[discover]]
+name = "lc.B站直播通知"
+type = "bilibili.live"
+uid = 40214146
+iteration = 60  # 60s检查一次
+time_window = 120   # 120内重新开播不重复通知
+handlers = ['bilibili.live.split2format', 'normal.format2cq', ]
+senders = [{ name = "cq_http", target_type = "user", target = "583837727" }]
+

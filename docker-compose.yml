@@ -1,0 +1,46 @@
+version: "3.9"
+services:
+  fishbot:
+    image: python:3.11
+    ports:
+      - "${SANIC_PORT}:1337"
+    container_name: fishbot
+    volumes:
+      - ./src:/app/src:rw
+      - ./data/log/fishbot:/app/log:rw
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      # - DB_HOST=${DB_HOST}
+      # - DB_PORT=${DB_PORT}
+      # - DB_USER=${DB_USER}
+      # - DB_PASSWORD=${DB_PASSWORD}
+      # - DB_DATABASE=${DB_DATABASE}
+      - TZ=${TIMEZONE}
+      - DEPLOY_TYPE=main
+      - RUN_MODE=${RUN_MODE}
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+      restart_policy:
+        condition: on-failure
+    entrypoint: [ "/bin/bash", "/app/src/entrypoint.sh" ]
+
+    links:
+      - fishbot-redis
+    depends_on:
+      - fishbot-redis
+
+  fishbot-redis:
+    image: redis
+    restart: always
+    container_name: fishbot-redis
+    environment:
+      - TZ=${TIMEZONE}
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    volumes:
+      - "./data/redis:/data"
+    command: redis-server --requirepass ${REDIS_PASSWORD} --port ${REDIS_PORT}

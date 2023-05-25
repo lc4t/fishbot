@@ -1,0 +1,2 @@
+class DiscoverBase(object):
+    pass
