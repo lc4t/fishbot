@@ -44,7 +44,12 @@ class BilibiliAPI(object):
     @classmethod
     async def get_user_dynamic(cls, uid, *args, **kwargs):
         url = f'https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?offset=&host_mid={uid}&timezone_offset=-480&features=itemOpusStyle'
-        resp_json = await cls.request_warp(app.ctx.http.get_json, url, headers=cls.headers)
+        headers = cls.headers.copy()
+        if headers.get('cookie'):
+            headers['cookie'] += f'DedeUserID={uid}'
+        else:
+            headers['cookie'] = f'DedeUserID={uid}'
+        resp_json = await cls.request_warp(app.ctx.http.get_json, url, headers=headers)
         if not resp_json:
             logger.error(f'get_latest_dynamic failed, uid={uid}')
             return None
